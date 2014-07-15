@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+# gem 'rails', '3.0.9'
+gem 'rails', '4.0.1'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+
+# gem 'sqlite3'
+gem 'mysql2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -43,3 +45,12 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# bvm
+gem 'capistrano', '~> 2'
+gem 'rubber', '~> 2'
+group :production do
+  gem 'therubyracer', :require => false  # javascript for pre-compiling assets on the server
+end
+
+gem 'open4'
