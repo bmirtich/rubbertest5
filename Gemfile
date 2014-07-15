@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # gem 'rails', '3.0.9'
 gem 'rails', '4.0.1'
@@ -54,3 +54,4 @@ group :production do
 end
 
 gem 'open4'
+gem 'rubber'
