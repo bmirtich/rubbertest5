@@ -54,4 +54,4 @@ group :production do
 end
 
 gem 'open4'
-gem 'rubber'
+
