@@ -12,9 +12,11 @@ end
 
 # Use a simple directory tree copy here to make demo easier.
 # You probably want to use your own repository for a real app
-set :scm, :none
-set :repository, "."
-set :deploy_via, :copy
+set :scm, :git
+set :repository, "https://github.com/bmirtich/rubbertest5.git"
+set :branch, "master"
+ssh_options[:forward_agent] = true  # Magic!  use our local github key to pull the deploy
+set :deploy_via, :remote_cache
 
 # Easier to do system level config as root - probably should do it through
 # sudo in the future.  We use ssh keys for access, so no passwd needed
@@ -32,7 +34,7 @@ set :keep_releases, 3
 # (instance*.yml + rubber*.yml) for a deploy.  This gives us the
 # convenience of not having to checkin files for staging, as well as 
 # the safety of forcing it to be checked in for production.
-set :push_instance_config, Rubber.env != 'production'
+set :push_instance_config, true
 
 # don't waste time bundling gems that don't need to be there 
 set :bundle_without, [:development, :test, :staging] if Rubber.env == 'production'
@@ -42,6 +44,7 @@ set :bundle_without, [:development, :test, :staging] if Rubber.env == 'productio
 # RUBBER_ENV=production MAX_HOSTS=1 cap invoke COMMAND=hostname
 max_hosts = ENV['MAX_HOSTS'].to_i
 default_run_options[:max_hosts] = max_hosts if max_hosts > 0
+default_run_options[:pty] = true
 
 # Allows the tasks defined to fail gracefully if there are no hosts for them.
 # Comment out or use "required_task" for default cap behavior of a hard failure

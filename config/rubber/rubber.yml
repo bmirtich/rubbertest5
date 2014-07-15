@@ -1,12 +1,12 @@
 # REQUIRED: The name of your application
-app_name: your_app_name
+app_name: rubbertest5
 
 # REQUIRED: The system user to run your app servers as
 app_user: app
 
 # REQUIRED: Notification emails (e.g. monit) get sent to this address
 #
-admin_email: "root@#{full_host}"
+admin_email: "root@full_host.com"
 
 # OPTIONAL: If not set, you won't be able to access web_tools
 # server (graphite, graylog, monit status, haproxy status, etc)
@@ -14,7 +14,7 @@ admin_email: "root@#{full_host}"
 # web_tools_password: sekret
 
 # REQUIRED: The timezone the server should be in
-timezone: US/Eastern
+timezone: US/Pacific
 
 # REQUIRED: the domain all the instances should be associated with
 #
@@ -29,6 +29,7 @@ domain: foo.com
 # also be pushed to remote host at Rubber.root/config/rubber/rubber-secret.yml
 #
 # rubber_secret: "#{File.expand_path('~') + '/.ec2' + (Rubber.env == 'production' ? '' : '_dev') + '/rubber-secret.yml' rescue ''}"
+rubber_secret: "#{File.join(RUBBER_ROOT, 'config', 'secrets', 'rubber-secret.yml')}"
 
 # OPTIONAL: Encryption key that was used to obfuscate the contents of rubber-secret.yml with "rubber util:obfuscation" 
 # Not that much better when stored in here, but you could use a ruby snippet in here to fetch it from a key server or something
@@ -54,13 +55,13 @@ cloud_providers:
     # us-west-1      # US West (Northern California) Region
     # us-west-2      # US West (Oregon) Region
     #
-    region: us-east-1
+    region: us-west-2
 
     # REQUIRED The amazon keys and account ID (digits only, no dashes) used to access the AWS API
     #
-    access_key: XXX
-    secret_access_key: YYY
-    account: 'ZZZ'
+    # access_key:
+    # secret_access_key:
+    # account:
 
     # REQUIRED:  The name of the amazon keypair and location of its private key
     #
@@ -69,8 +70,9 @@ cloud_providers:
     # extension ".pub".  The easiest way to get your hand on this is to create the
     # public key from the private key: ssh-keygen -y -f gsg-keypair > gsg-keypair.pub
     #
-    key_name: gsg-keypair
-    key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/*' + cloud_providers.aws.key_name].first}"
+    # key_name: admin
+    # key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/*' + cloud_providers.aws.key_name].first
+    # key_file: "config/secrets/admin.pem"
 
     # OPTIONAL: Needed for bundling a running instance using rubber:bundle
     #
@@ -86,8 +88,23 @@ cloud_providers:
     # Ubuntu 12.04 Precise instance-store 64-bit: ami-eafa5883
     #
     # m1.small or m1.large or m1.xlarge
-    image_type: c1.medium
-    image_id: ami-b6089bdf
+    image_type: t2.micro
+    # image_id: ami-d13845e1
+    # image_id: ami-8daed3bd 
+    # image_id: ami-77d7a747  Red Hat Enterprise Linux 7.0 (HVM).  Can be created but can't connect
+
+    # Ubuntu 64-bit 14.04 machine.  Works through most of bootstrap
+    #  process but then get stuck on apache install.  Because ubuntu
+    #  14.04 isnot yet supported by rubber.  Latest Ubuntu versino
+    #  supported by rubber is 12.04.  See
+    #  https://github.com/rubber/rubber/issues/478
+    # image_id: ami-b5a9d485
+
+    # Ubuntu 12.04.  See
+    # http://askubuntu.com/questions/53582/how-do-i-know-what-ubuntu-ami-to-launch-on-ec2.
+    # Also needs to have virtualization type 'hvm' to support
+    # t2.micro, as indicated by AWS API error.
+    image_id: ami-0be2743b
 
     # OPTIONAL: EC2 spot instance request support.
     #
@@ -376,6 +393,13 @@ staging_roles: "#{known_roles.reject {|r| r =~ /slave/ || r =~ /^db$/ }.join(','
 #             filesystem: xfs # The filesystem to create on the logical volume
 #             filesystem_opts: -f # the filesystem opts in mkfs
 #             mount: /mnt/large_work_dir # The directory to mount this LVM volume to
+
+hosts:
+  cms1:
+    instance_roles: “web,app,web_tools,db:primary=true”
+    availability_zone: us-west-2a
+    use_static_ip: true     # true tells Amazon to provide an IP address for you
+
 
 # OPTIONAL: You can also define your own variables here for use when
 # transforming config files, and they will be available in your config
