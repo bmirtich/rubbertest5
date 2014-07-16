@@ -1,5 +1,5 @@
 role_dependencies:
-  webserver: [haproxy]
+  web: [haproxy]
   app: [passenger]
   web_tools: [apache, graphite_server, graphite_web]
 
