@@ -241,8 +241,8 @@ security_groups:
 # OPTIONAL: The default security groups to create instances with
 assigned_security_groups: [default]
 roles:
-  web:
-    assigned_security_groups: [web]
+  webserver:
+    assigned_security_groups: [webserver]
   web_tools:
     assigned_security_groups: [web_tools]
 
@@ -396,7 +396,7 @@ staging_roles: "#{known_roles.reject {|r| r =~ /slave/ || r =~ /^db$/ }.join(','
 
 hosts:
   cms1:
-    instance_roles: “web,app,web_tools,db:primary=true”
+    instance_roles: “webserver,app,web_tools,db:primary=true”
     availability_zone: us-west-2a
     use_static_ip: true     # true tells Amazon to provide an IP address for you
 

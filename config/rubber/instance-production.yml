@@ -4,7 +4,7 @@
   domain: foo.com
   roles:
   - !ruby/object:Rubber::Configuration::RoleItem
-    name: “web
+    name: “webserver
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
     name: app
@@ -44,21 +44,21 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
-  instance_id: i-2fca5122
+  instance_id: i-b970ebb4
   image_type: t2.micro
   image_id: ami-0be2743b
   security_groups:
   - default
   - web_tools
-  external_host: ec2-54-191-51-113.us-west-2.compute.amazonaws.com
-  external_ip: 54.186.136.5
-  internal_host: ip-172-31-21-38.us-west-2.compute.internal
-  internal_ip: 172.31.21.38
+  external_host: ec2-54-191-155-187.us-west-2.compute.amazonaws.com
+  external_ip: 54.191.155.187
+  internal_host: ip-172-31-29-87.us-west-2.compute.internal
+  internal_ip: 172.31.29.87
   zone: us-west-2a
   provider: aws
   platform: linux
   root_device_type: ebs
-  static_ip: 54.186.136.5
+  static_ip: 54.191.155.187
 - volumes: {}
   static_ips:
-    cms1: 54.186.136.5
+    cms1: 54.191.155.187
