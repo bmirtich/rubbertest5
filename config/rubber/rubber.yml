@@ -396,7 +396,7 @@ staging_roles: "#{known_roles.reject {|r| r =~ /slave/ || r =~ /^db$/ }.join(','
 
 hosts:
   cms1:
-    instance_roles: “web,app,web_tools,db:primary=true”
+    instance_roles: “web,app,web_tools,haproxy,db:primary=true”
     availability_zone: us-west-2a
     use_static_ip: true     # true tells Amazon to provide an IP address for you
 
