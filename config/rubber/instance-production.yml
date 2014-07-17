@@ -4,7 +4,10 @@
   domain: foo.com
   roles:
   - !ruby/object:Rubber::Configuration::RoleItem
-    name: “web
+    name: web
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: haproxy
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
     name: app
@@ -25,13 +28,6 @@
     name: graphite_web
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
-    name: haproxy
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: db
-    options:
-      primary: true”
-  - !ruby/object:Rubber::Configuration::RoleItem
     name: db
     options:
       primary: true
@@ -47,21 +43,22 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
-  instance_id: i-25bbde28
+  instance_id: i-8183e68c
   image_type: t2.micro
   image_id: ami-0be2743b
   security_groups:
   - default
+  - web
   - web_tools
-  external_host: ec2-54-191-185-33.us-west-2.compute.amazonaws.com
-  external_ip: 54.191.185.33
-  internal_host: ip-172-31-20-67.us-west-2.compute.internal
-  internal_ip: 172.31.20.67
+  external_host: ec2-54-187-37-112.us-west-2.compute.amazonaws.com
+  external_ip: 54.187.37.112
+  internal_host: ip-172-31-29-189.us-west-2.compute.internal
+  internal_ip: 172.31.29.189
   zone: us-west-2a
   provider: aws
   platform: linux
   root_device_type: ebs
-  static_ip: 54.191.185.33
+  static_ip: 54.187.37.112
 - volumes: {}
   static_ips:
-    cms1: 54.191.185.33
+    cms1: 54.187.37.112
