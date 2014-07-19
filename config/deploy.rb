@@ -12,14 +12,26 @@ end
 
 # Use a simple directory tree copy here to make demo easier.
 # You probably want to use your own repository for a real app
-set :scm, :git
+
 # This is how you deploy from a remote git repo: ...
-#           set :repository, "https://github.com/bmirtich/rubbertest5.git"
-# ... and this is how you do it from a local one:
-set :repository, "/home/brian/fun/ruby/rubbertest5/.git"
-set :branch, "master"
-ssh_options[:forward_agent] = true  # Magic!  use our local github key to pull the deploy
-set :deploy_via, :remote_cache
+# set :scm, :git
+# set :repository, "https://github.com/bmirtich/rubbertest5.git"
+# set :branch, "master"
+# ssh_options[:forward_agent] = true  # Magic!  use our local github key to pull the deploy
+# set :deploy_via, :remote_cache
+
+# ... and this is how you do it from a local one.  The copy_exclude
+# doesn't really work -- it's not implemented.  See
+# https://github.com/capistrano/capistrano/issues/515.  This is why we
+# keep rubber-secret.yml under ~/.ec2 instead of within this project
+# under config/secrets.  We don't want this stuff get copied, even
+# temporarily, to the server.  Otherwise, you'd have to remove the
+# config/secrets directory immediately after a deployment.
+set :scm, :none
+set :repository, "."
+set :deploy_via, :copy
+set :copy_exclude, "config/secrets/*" # This doesn't really work yet!  
+set :copy_compression, :zip
 
 # Easier to do system level config as root - probably should do it through
 # sudo in the future.  We use ssh keys for access, so no passwd needed
