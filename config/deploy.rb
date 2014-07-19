@@ -13,7 +13,10 @@ end
 # Use a simple directory tree copy here to make demo easier.
 # You probably want to use your own repository for a real app
 set :scm, :git
-set :repository, "https://github.com/bmirtich/rubbertest5.git"
+# This is how you deploy from a remote git repo: ...
+#           set :repository, "https://github.com/bmirtich/rubbertest5.git"
+# ... and this is how you do it from a local one:
+set :repository, "/home/brian/fun/ruby/rubbertest5/.git"
 set :branch, "master"
 ssh_options[:forward_agent] = true  # Magic!  use our local github key to pull the deploy
 set :deploy_via, :remote_cache
